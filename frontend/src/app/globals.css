@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FAFAFB;
+  --foreground: #09090B;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(228, 228, 231, 0.6);
+  --accent-glow: radial-gradient(circle, rgba(255, 69, 84, 0.08) 0%, rgba(99, 102, 241, 0.03) 70%);
+}
+
+.dark {
+  --background: #09090B;
+  --foreground: #FAFAFB;
+  --card-bg: rgba(9, 9, 11, 0.65);
+  --card-border: rgba(39, 39, 42, 0.5);
+  --accent-glow: radial-gradient(circle, rgba(255, 69, 84, 0.12) 0%, rgba(99, 102, 241, 0.05) 70%);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  background-image: var(--accent-glow);
+  background-attachment: fixed;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--card-border);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.4);
+}
+
+/* Keyframes for Pulse & Wave animations */
+@keyframes voice-wave {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1.0); }
+}
+
+.voice-wave-bar {
+  animation: voice-wave 1.2s ease-in-out infinite;
+}

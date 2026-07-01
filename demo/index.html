@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediLingua AI - Breaking Language Barriers in Healthcare</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #FAFAFB;
+      background-image: radial-gradient(circle, rgba(255, 69, 84, 0.06) 0%, rgba(99, 102, 241, 0.02) 70%);
+      background-attachment: fixed;
+    }
+    .font-outfit {
+      font-family: 'Outfit', sans-serif;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(228, 228, 231, 0.6);
+    }
+    /* Voice wave animation */
+    @keyframes voice-wave {
+      0%, 100% { transform: scaleY(0.2); }
+      50% { transform: scaleY(1.0); }
+    }
+    .wave-bar {
+      animation: voice-wave 1.2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="h-full flex overflow-hidden">
+
+  <!-- 1. DASHBOARD SIDEBAR NAVIGATION -->
+  <aside class="w-64 glass-panel flex flex-col justify-between p-4 border-r border-slate-200 fixed left-0 top-0 h-full hidden md:flex z-30">
+    <div class="flex flex-col gap-6">
+      <!-- Logo -->
+      <div class="flex items-center gap-2 px-3 py-2">
+        <div class="h-8 w-8 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20 text-red-500">
+          <i data-lucide="heart" class="h-5 w-5 fill-red-500/20 animate-pulse"></i>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-slate-900 font-outfit">
+          MediLingua<span class="text-red-500">AI</span>
+        </span>
+      </div>
+
+      <!-- Navigation links -->
+      <nav class="flex flex-col gap-1" id="sidebar-nav">
+        <button onclick="showScreen('overview')" class="nav-btn active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-white bg-red-500 shadow-sm w-full">
+          <i data-lucide="activity" class="h-4 w-4 shrink-0"></i>
+          <span>Overview</span>
+        </button>
+        <button onclick="showScreen('translate')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-100 hover:text-slate-900 w-full">
+          <i data-lucide="languages" class="h-4 w-4 shrink-0"></i>
+          <span>Live Translator</span>
+        </button>
+        <button onclick="showScreen('history')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-100 hover:text-slate-900 w-full">
+          <i data-lucide="history" class="h-4 w-4 shrink-0"></i>
+          <span>Patient History</span>
+        </button>
+        <button onclick="showScreen('reminders')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-100 hover:text-slate-900 w-full">
+          <i data-lucide="bell" class="h-4 w-4 shrink-0"></i>
+          <span>Reminders</span>
+        </button>
+        <button onclick="showScreen('hospitals')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-100 hover:text-slate-900 w-full">
+          <i data-lucide="map-pin" class="h-4 w-4 shrink-0"></i>
+          <span>Hospitals</span>
+        </button>
+        <button onclick="showScreen('emergency')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-100 hover:text-slate-900 w-full">
+          <i data-lucide="alert-triangle" class="h-4 w-4 shrink-0"></i>
+          <span>SOS Alerts</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- User Profile tag -->
+    <div class="border-t border-slate-200 pt-4 flex items-center gap-3 px-2">
+      <div class="h-9 w-9 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-600">
+        <i data-lucide="user" class="h-4 w-4"></i>
+      </div>
+      <div class="flex flex-col text-left">
+        <span class="text-xs font-bold text-slate-800 font-outfit">Dr. Rajesh Patel</span>
+        <span class="text-[10px] text-slate-500 font-semibold">Rural Medical Officer</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. MAIN CONTAINER -->
+  <div class="flex-1 md:pl-64 flex flex-col h-full overflow-hidden">
+    <!-- Navbar Header -->
+    <header class="w-full h-16 glass-panel border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-20">
+      <h1 class="text-lg font-bold text-slate-800 tracking-tight font-outfit" id="nav-title">Overview Dashboard</h1>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 bg-white text-green-600 text-xs font-bold shadow-sm">
+          <i data-lucide="wifi" class="h-3.5 w-3.5 text-green-500 animate-pulse"></i>
+          <span>Sandbox Active</span>
+        </div>
+        <div class="h-8 w-8 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500">
+          <i data-lucide="user" class="h-4 w-4"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT VIEWS -->
+    <main class="flex-1 overflow-y-auto p-6" id="main-content">
+      
+      <!-- ================= SCREEN: OVERVIEW ================= -->
+      <div id="screen-overview" class="screen-view flex flex-col gap-6">
+        <!-- Banner alert -->
+        <div class="w-full bg-gradient-to-r from-red-500 to-indigo-600 text-white rounded-2xl p-6 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="h-12 w-12 bg-white/20 rounded-xl flex items-center justify-center text-white shrink-0">
+              <i data-lucide="sparkles" class="h-6 w-6"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold font-outfit">Ready for India Runs Ideathon Demo?</h2>
+              <p class="text-xs text-white/90 mt-0.5">Explore the screens using the sidebar or click below to launch the Live Translator.</p>
+            </div>
+          </div>
+          <button onclick="showScreen('translate')" class="px-5 py-2.5 bg-white text-red-600 text-xs font-bold rounded-xl shadow-sm hover:scale-105 transition-all">
+            Launch Live Translation Console
+          </button>
+        </div>
+
+        <!-- Metrics cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="glass-panel p-5 rounded-2xl shadow-premium">
+            <div class="flex justify-between items-center pb-2 text-slate-500">
+              <span class="text-xs font-bold uppercase tracking-wider">Total Consultations</span>
+              <i data-lucide="activity" class="h-4 w-4 text-red-500"></i>
+            </div>
+            <span class="text-2xl font-extrabold font-outfit">248</span>
+          </div>
+          <div class="glass-panel p-5 rounded-2xl shadow-premium">
+            <div class="flex justify-between items-center pb-2 text-slate-500">
+              <span class="text-xs font-bold uppercase tracking-wider">Active Emergencies</span>
+              <i data-lucide="alert-triangle" class="h-4 w-4 text-orange-500"></i>
+            </div>
+            <span class="text-2xl font-extrabold font-outfit text-orange-500">0</span>
+          </div>
+          <div class="glass-panel p-5 rounded-2xl shadow-premium">
+            <div class="flex justify-between items-center pb-2 text-slate-500">
+              <span class="text-xs font-bold uppercase tracking-wider">Average Latency</span>
+              <i data-lucide="clock" class="h-4 w-4 text-indigo-500"></i>
+            </div>
+            <span class="text-2xl font-extrabold font-outfit">1.18s</span>
+          </div>
+        </div>
+
+        <!-- Patient search list -->
+        <Card class="glass-panel rounded-2xl p-6">
+          <h3 class="text-md font-bold mb-4 font-outfit">Select Patient for Consultation</h3>
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors">
+              <div class="flex items-center gap-3">
+                <div class="h-9 w-9 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
+                  <i data-lucide="heart" class="h-4 w-4"></i>
+                </div>
+                <div class="text-left">
+                  <p class="text-xs font-bold">Muthu Krishnan</p>
+                  <p class="text-[10px] text-slate-500">Age: 62 • Male • Tamil Speaker • Allergy: Penicillin</p>
+                </div>
+              </div>
+              <button onclick="showScreen('translate')" class="px-3.5 py-1.5 bg-red-500 text-white rounded-lg text-xs font-bold hover:bg-red-600 transition-all flex items-center gap-1">
+                <i data-lucide="languages" class="h-3.5 w-3.5"></i> Start Consult
+              </button>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      <!-- ================= SCREEN: TRANSLATE ================= -->
+      <div id="screen-translate" class="screen-view hidden flex-col gap-6">
+        <!-- Patient Summary bar -->
+        <div class="flex items-center justify-between p-4 rounded-xl glass-panel border border-slate-200">
+          <div class="flex items-center gap-3">
+            <div class="h-9 w-9 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
+              <i data-lucide="user" class="h-4 w-4"></i>
+            </div>
+            <div class="text-left">
+              <span class="text-sm font-bold block">Muthu Krishnan</span>
+              <span class="text-[10px] text-slate-500 font-semibold">Age 62 • Penicillin Allergy • Native: Tamil</span>
+            </div>
+          </div>
+          <button onclick="triggerSOAPGeneration()" class="px-4 py-2 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-sm hover:bg-indigo-700 transition-all">
+            End Consult & Generate SOAP
+          </button>
+        </div>
+
+        <!-- SOS Warning Alert -->
+        <div id="sos-banner" class="hidden w-full bg-red-600 text-white p-3.5 rounded-xl items-center justify-between animate-pulse">
+          <div class="flex items-center gap-2">
+            <i data-lucide="siren" class="h-5 w-5 text-white"></i>
+            <span class="text-xs font-bold">EMERGENCY SYMPTOM DETECTED: "Chest pain radiating to left arm"</span>
+          </div>
+          <button onclick="showScreen('emergency')" class="px-3 py-1 bg-white text-red-600 text-[10px] font-bold rounded-lg shadow-sm">
+            SOS Control Panel
+          </button>
+        </div>
+
+        <!-- Dialogue Workspace Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 flex flex-col h-[500px] glass-panel rounded-2xl border border-slate-200 justify-between">
+            <!-- Transcript messages -->
+            <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4" id="chat-messages">
+              <div class="flex flex-col items-center justify-center h-full text-slate-400 gap-1.5" id="chat-placeholder">
+                <i data-lucide="mic" class="h-8 w-8 text-slate-300"></i>
+                <p class="text-xs">Click a speaker simulator below to stream mock messages.</p>
+              </div>
+            </div>
+
+            <!-- Simulator Action panel -->
+            <div class="p-4 border-t border-slate-200 bg-slate-50/50 flex justify-around rounded-b-2xl">
+              <button onclick="simSpeaker('Patient')" class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:bg-indigo-700 transition-all flex items-center gap-1.5">
+                <i data-lucide="mic" class="h-4 w-4"></i> Patient Speaks (Tamil)
+              </button>
+              <button onclick="simSpeaker('Doctor')" class="px-4 py-2 bg-red-500 text-white text-xs font-bold rounded-xl hover:bg-red-600 transition-all flex items-center gap-1.5">
+                <i data-lucide="mic" class="h-4 w-4"></i> Doctor Speaks (English)
+              </button>
+            </div>
+          </div>
+
+          <!-- Live AI Risk Panel -->
+          <div class="glass-panel p-5 rounded-2xl border border-slate-200 flex flex-col gap-4">
+            <h3 class="text-sm font-bold flex items-center gap-1.5 text-red-500 font-outfit">
+              <i data-lucide="shield-alert" class="h-4 w-4"></i>
+              Live AI Safety Profile
+            </h3>
+            <div class="flex flex-col gap-3 text-xs font-semibold text-left">
+              <div class="p-3 bg-red-500/10 border border-red-500/20 text-red-600 rounded-xl">
+                Allergy alert: Penicillin allergy noted.
+              </div>
+              <div class="p-3 bg-yellow-500/10 border border-yellow-500/20 text-yellow-600 rounded-xl">
+                Hypertension & Diabetes history logged.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: SOAP SUMMARY ================= -->
+      <div id="screen-soap" class="screen-view hidden flex-col gap-6">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+          <div class="text-left">
+            <h2 class="text-xl font-bold font-outfit">Generated SOAP Clinical Notes</h2>
+            <p class="text-xs text-slate-500 font-semibold">Consultation compiled for Muthu Krishnan.</p>
+          </div>
+          <button onclick="showScreen('prescription')" class="px-4 py-2 bg-red-500 text-white font-bold text-xs rounded-xl shadow-sm flex items-center gap-1">
+            Configure Prescription & Reminders <i data-lucide="arrow-right" class="h-4 w-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+          <div class="glass-panel p-5 rounded-xl border border-slate-200">
+            <span class="text-xs font-extrabold text-red-500 uppercase block mb-1">Subjective (S)</span>
+            <p class="text-xs font-medium leading-relaxed text-slate-700">
+              Patient reports severe chest tightness radiating down the left arm, lasting 15 minutes. Occurred after mild exercise.
+            </p>
+          </div>
+          <div class="glass-panel p-5 rounded-xl border border-slate-200">
+            <span class="text-xs font-extrabold text-indigo-600 uppercase block mb-1">Objective (O)</span>
+            <p class="text-xs font-medium leading-relaxed text-slate-700">
+              BP 142/90 mmHg, Pulse 88 bpm. Heart sounds normal, no respiratory distress observed.
+            </p>
+          </div>
+          <div class="glass-panel p-5 rounded-xl border border-slate-200">
+            <span class="text-xs font-extrabold text-violet-600 uppercase block mb-1">Assessment (A)</span>
+            <p class="text-xs font-medium leading-relaxed text-slate-700">
+              Angina suspected. Patient carries high cardiovascular risks and a Penicillin allergy.
+            </p>
+          </div>
+          <div class="glass-panel p-5 rounded-xl border border-slate-200">
+            <span class="text-xs font-extrabold text-green-600 uppercase block mb-1">Plan (P)</span>
+            <p class="text-xs font-medium leading-relaxed text-slate-700">
+              Nitroglycerin sublingual PRN. Refer to cardiologist for ECG today. Strictly avoid Penicillins.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: PRESCRIPTION ================= -->
+      <div id="screen-prescription" class="screen-view hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between h-[450px]">
+          <div>
+            <h3 class="text-md font-bold mb-2 font-outfit text-left">Prescription Upload & OCR Reader</h3>
+            <p class="text-xs text-slate-500 mb-4 text-left">Browse an image to simulate handwritten OCR extraction.</p>
+            <div class="border-2 border-dashed border-slate-200 rounded-xl h-48 flex flex-col items-center justify-center text-slate-400 bg-slate-50/50">
+              <i data-lucide="image" class="h-10 w-10 text-slate-300 animate-pulse"></i>
+              <p class="text-xs mt-2">Mock Scanned Image Container</p>
+            </div>
+          </div>
+          <div class="flex justify-end pt-4">
+            <button onclick="simOCRScan()" class="px-4 py-2 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-sm">
+              Simulate OCR Scan
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between h-[450px]">
+          <div>
+            <h3 class="text-md font-bold mb-4 font-outfit text-left">Extracted Medicines & Warnings</h3>
+            <div id="ocr-results" class="flex flex-col gap-3 text-xs text-left">
+              <p class="text-slate-400 font-semibold py-8 text-center">No medicines loaded. Click left simulation button.</p>
+            </div>
+          </div>
+          <div class="flex justify-end pt-4 gap-2">
+            <button onclick="showScreen('reminders')" class="px-4 py-2 bg-red-500 text-white font-bold text-xs rounded-xl shadow-sm flex items-center gap-1">
+              Confirm & Set Reminders <i data-lucide="arrow-right" class="h-4 w-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: REMINDERS ================= -->
+      <div id="screen-reminders" class="screen-view hidden flex-col gap-6">
+        <h3 class="text-md font-bold font-outfit text-left">Active Intake WhatsApp / SMS Schedules</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="reminders-list">
+          <div class="glass-panel p-5 rounded-2xl border border-slate-200 text-left">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="h-8 w-8 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20 text-green-600">
+                <i data-lucide="message-square" class="h-4 w-4"></i>
+              </div>
+              <div>
+                <p class="text-xs font-bold">Muthu Krishnan</p>
+                <p class="text-[9px] text-slate-500">WhatsApp Reminder</p>
+              </div>
+            </div>
+            <div class="text-xs font-semibold flex flex-col gap-2">
+              <div class="flex justify-between py-1 border-b border-slate-100">
+                <span class="text-slate-400">Medicine:</span>
+                <span>Nitroglycerin 0.5mg</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-100">
+                <span class="text-slate-400">Time:</span>
+                <span>08:00 AM</span>
+              </div>
+              <div class="flex justify-between py-1">
+                <span class="text-slate-400">Language:</span>
+                <span class="text-indigo-600">Tamil</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: HOSPITALS ================= -->
+      <div id="screen-hospitals" class="screen-view hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="flex flex-col gap-4 text-left">
+          <h3 class="text-md font-bold font-outfit">Hospitals Nearby</h3>
+          <div class="glass-panel p-4 rounded-xl border border-slate-200 flex flex-col gap-2">
+            <span class="text-[9px] font-extrabold uppercase bg-indigo-500/10 text-indigo-600 px-2 py-0.5 rounded-full w-max">District Hospital</span>
+            <h4 class="text-xs font-bold">Kancheepuram General Hospital</h4>
+            <p class="text-[10px] text-slate-500">General Hospital Rd, Kancheepuram (2.4 km)</p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 h-[450px] rounded-2xl bg-slate-200 dark:bg-slate-900 border border-slate-300 flex flex-col items-center justify-center text-slate-400">
+          <i data-lucide="map-pin" class="h-8 w-8 text-red-500 animate-bounce"></i>
+          <p class="text-xs font-bold mt-2">Google Maps Geolocation Sandbox</p>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN: EMERGENCY ================= -->
+      <div id="screen-emergency" class="screen-view hidden flex-col gap-6">
+        <h3 class="text-md font-bold font-outfit text-left">SOS Emergency Center</h3>
+        <div class="glass-panel p-5 rounded-2xl border border-red-200 bg-red-500/5 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-start gap-3">
+            <i data-lucide="alert-triangle" class="h-6 w-6 text-red-600 shrink-0 mt-0.5"></i>
+            <div>
+              <h4 class="text-xs font-bold text-red-600">Active Critical Alarm - Muthu Krishnan</h4>
+              <p class="text-[10px] text-red-500 mt-1 font-semibold">Triggered: "Chest pain radiating to left arm" • Time: 06:53 PM</p>
+            </div>
+          </div>
+          <button onclick="alert('Ambulance coordinates sent to primary dispatch team.')" class="px-4 py-2 bg-red-600 text-white font-bold text-xs rounded-xl">
+            Dispatch Ambulance
+          </button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Screen router switcher
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen-view').forEach(s => s.classList.add('hidden'));
+      document.getElementById(`screen-${screenId}`).classList.remove('hidden');
+      
+      // Update sidebar nav active state
+      document.querySelectorAll('#sidebar-nav button').forEach(b => {
+        b.className = "nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-100 hover:text-slate-900 w-full";
+      });
+      
+      // Highlight selected
+      const activeBtn = Array.from(document.querySelectorAll('#sidebar-nav button')).find(b => b.getAttribute('onclick').includes(screenId));
+      if (activeBtn) {
+        activeBtn.className = "nav-btn active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-white bg-red-500 shadow-sm w-full";
+      }
+
+      // Update Nav title
+      const titles = {
+        overview: "Overview Dashboard",
+        translate: "Live Translation Console",
+        soap: "SOAP Summary File",
+        prescription: "Prescription OCR Analysis",
+        reminders: "Active Reminders",
+        hospitals: "Hospital Locator Map",
+        emergency: "Emergency SOS Logs"
+      };
+      document.getElementById('nav-title').innerText = titles[screenId] || "MediLingua AI";
+      lucide.createIcons();
+    }
+
+    // Dialogue stream simulator
+    function simSpeaker(speaker) {
+      const messagesContainer = document.getElementById('chat-messages');
+      const placeholder = document.getElementById('chat-placeholder');
+      if (placeholder) placeholder.remove();
+
+      const isPatient = speaker === 'Patient';
+      const text = isPatient ? "எனக்கு நெஞ்சு வலி அதிகமாக உள்ளது" : "How long have you had this chest pain?";
+      const translation = isPatient 
+        ? "Doctor, I have severe chest pain radiating to left arm." 
+        : "உங்களுக்கு மார்பு வலி எப்போது தொடங்கியது?";
+
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `flex flex-col max-w-[85%] rounded-2xl p-4 shadow-sm ${
+        isPatient ? 'self-start bg-indigo-500/10 border border-indigo-500/10' : 'self-end bg-red-500/5 border border-red-500/5'
+      }`;
+
+      msgDiv.innerHTML = `
+        <div class="flex items-center justify-between mb-1 gap-4">
+          <span class="text-[10px] font-extrabold uppercase tracking-wide ${isPatient ? 'text-indigo-600' : 'text-red-500'}">
+            ${isPatient ? 'Muthu Krishnan (Patient)' : 'Doctor (You)'}
+          </span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-1">"${text}"</p>
+        <p class="text-sm font-semibold">${translation}</p>
+      `;
+
+      messagesContainer.appendChild(msgDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      if (isPatient) {
+        // Trigger emergency warning SOS alert
+        document.getElementById('sos-banner').classList.remove('hidden');
+        document.getElementById('sos-banner').classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function triggerSOAPGeneration() {
+      showScreen('soap');
+    }
+
+    // Prescription OCR simulator
+    function simOCRScan() {
+      const ocrResults = document.getElementById('ocr-results');
+      ocrResults.innerHTML = `
+        <div class="p-3 bg-red-500/10 border border-red-500/20 text-red-600 rounded-xl flex items-start gap-1.5 mb-2">
+          <i data-lucide="alert-triangle" class="h-4 w-4 shrink-0 mt-0.5"></i>
+          <span>Allergy alert: Amoxicillin is a penicillin derivative. Patient has Penicillin allergy!</span>
+        </div>
+
+        <div class="p-4 border border-slate-200 rounded-xl bg-slate-50/50 flex flex-col gap-1">
+          <div class="flex justify-between font-bold">
+            <span>Amoxicillin 500mg</span>
+            <span>1-0-1 • 5 days</span>
+          </div>
+          <p class="text-[11px] text-indigo-600 font-semibold mt-1">Tamil: காலையில் 1 மாத்திரை, இரவில் 1 மாத்திரை, உணவுக்கு பின் 5 நாட்களுக்கு</p>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    // Initialize Lucide icons on load
+    lucide.createIcons();
+  </script>
+</body>
+</html>
