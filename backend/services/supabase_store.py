@@ -1,7 +1,7 @@
 import os
 import base64
 from supabase import create_client, Client
-from ..config import settings
+from config import settings
 
 class SupabaseStore:
     def __init__(self):

@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status, Form
 from sqlalchemy.orm import Session
 from typing import Optional
-from ..db import get_db, Prescription, Patient
-from ..schemas import PrescriptionResponse
-from .auth import get_current_user, User
-from ..ai_engine import ai_engine
-from ..services.supabase_store import supabase_store
+from db import get_db, Prescription, Patient
+from schemas import PrescriptionResponse
+from api.auth import get_current_user, User
+from ai_engine import ai_engine
+from services.supabase_store import supabase_store
 import uuid
 
 router = APIRouter(prefix="", tags=["Translation & OCR"])

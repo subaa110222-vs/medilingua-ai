@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from ..db import get_db, Consultation, Patient, TranscriptionLog
-from ..schemas import ConsultationCreate, ConsultationResponse, TranscriptionLogResponse
-from .auth import get_current_user, User
-from ..ai_engine import ai_engine
+from db import get_db, Consultation, Patient, TranscriptionLog
+from schemas import ConsultationCreate, ConsultationResponse, TranscriptionLogResponse
+from api.auth import get_current_user, User
+from ai_engine import ai_engine
 
 router = APIRouter(prefix="/consultations", tags=["Consultations"])
 

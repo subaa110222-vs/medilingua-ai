@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 import uuid
 import datetime
-from .config import settings
+from config import settings
 
 # Setup SQLAlchemy connection
 # If connection to PostgreSQL fails, automatically fallback to local SQLite database file

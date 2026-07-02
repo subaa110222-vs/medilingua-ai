@@ -2,8 +2,8 @@ import os
 import json
 from openai import OpenAI
 from typing import Dict, Any, List, Optional
-from .config import settings
-from .services.bhashini import bhashini_service
+from config import settings
+from services.bhashini import bhashini_service
 
 class AIEngine:
     def __init__(self):

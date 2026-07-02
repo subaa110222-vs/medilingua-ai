@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from ..db import get_db, Reminder, Prescription, Patient
-from ..schemas import ReminderCreate, ReminderResponse
-from .auth import get_current_user, User
-from ..services.twilio_sms import twilio_service
+from db import get_db, Reminder, Prescription, Patient
+from schemas import ReminderCreate, ReminderResponse
+from api.auth import get_current_user, User
+from services.twilio_sms import twilio_service
 import datetime
 
 router = APIRouter(prefix="/reminders", tags=["Medicine Reminders"])

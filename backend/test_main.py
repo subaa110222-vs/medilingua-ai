@@ -2,8 +2,8 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from .db import Base, get_db, User, Patient
-from .main import app
+from db import Base, get_db, User, Patient
+from main import app
 
 # Setup test in-memory database instance
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test_temp.db"

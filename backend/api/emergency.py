@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from ..db import get_db, EmergencyAlert, Patient, Hospital
-from ..schemas import SOSCreate, EmergencyAlertResponse
-from .auth import get_current_user, User
-from ..services.twilio_sms import twilio_service
+from db import get_db, EmergencyAlert, Patient, Hospital
+from schemas import SOSCreate, EmergencyAlertResponse
+from api.auth import get_current_user, User
+from services.twilio_sms import twilio_service
 
 router = APIRouter(prefix="/emergency", tags=["Emergency Alarms"])
 

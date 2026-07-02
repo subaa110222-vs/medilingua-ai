@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from ..db import get_db, Hospital
-from .auth import get_current_user, User
+from db import get_db, Hospital
+from api.auth import get_current_user, User
 import math
 
 router = APIRouter(prefix="/hospitals", tags=["Hospitals & PHCs"])

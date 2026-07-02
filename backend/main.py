@@ -7,11 +7,11 @@ import uuid
 import datetime
 from typing import List, Dict
 
-from .config import settings
-from .db import engine, Base, get_db, Consultation, TranscriptionLog, Patient, User
-from .api import auth, patients, consultations, translations, reminders, hospitals, emergency
-from .ai_engine import ai_engine
-from .services.bhashini import bhashini_service
+from config import settings
+from db import engine, Base, get_db, Consultation, TranscriptionLog, Patient, User
+from api import auth, patients, consultations, translations, reminders, hospitals, emergency
+from ai_engine import ai_engine
+from services.bhashini import bhashini_service
 
 # Automatically create local database tables on startup
 Base.metadata.create_all(bind=engine)

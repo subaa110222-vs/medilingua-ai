@@ -1,5 +1,5 @@
 from twilio.rest import Client
-from ..config import settings
+from config import settings
 
 class TwilioService:
     def __init__(self):
